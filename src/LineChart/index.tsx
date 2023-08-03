@@ -14,6 +14,7 @@ import {
   Text,
   ColorValue,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import {styles} from './styles';
 import Svg, {
@@ -24,6 +25,7 @@ import Svg, {
   Rect,
   Text as CanvasText,
   Line,
+  G,
 } from 'react-native-svg';
 import {svgPath, bezierCommand} from '../utils';
 import {renderHorizSections} from './renderHorizSections';
@@ -434,7 +436,7 @@ export const LineChart = (props: propTypes) => {
   const [fillPoints3, setFillPoints3] = useState('');
   const [fillPoints4, setFillPoints4] = useState('');
   const [fillPoints5, setFillPoints5] = useState('');
-  const [selectedIndex, setSelectedIndex] = useState(-1);
+  const [selectedIndex, setSelectedIndex] = useState(props.initialIndex);
   const containerHeight = props.height || 200;
   const noOfSections = props.noOfSections || 10;
   let data = useMemo(() => {
@@ -2312,32 +2314,6 @@ export const LineChart = (props: propTypes) => {
 
       return (
         <Fragment key={index}>
-          {focusEnabled ? (
-            <>
-              {unFocusOnPressOut ? (
-                <Rect
-                  onPressIn={() => onStripPress(item, index)}
-                  onPressOut={() =>
-                    setTimeout(() => setSelectedIndex(-1), delayBeforeUnFocus)
-                  }
-                  x={initialSpacing + (spacing * index - spacing / 2)}
-                  y={8}
-                  width={spacing}
-                  height={containerHeight - 0}
-                  fill={'none'}
-                />
-              ) : (
-                <Rect
-                  onPress={() => onStripPress(item, index)}
-                  x={initialSpacing + (spacing * index - spacing / 2)}
-                  y={8}
-                  width={spacing}
-                  height={containerHeight - 0}
-                  fill={'none'}
-                />
-              )}
-            </>
-          ) : null}
           {item.showStrip ||
           (focusEnabled && index === selectedIndex && showStripOnFocus) ? (
             <Rect
@@ -2360,19 +2336,12 @@ export const LineChart = (props: propTypes) => {
             />
           ) : null}
           {customDataPoint ? (
-            <View
-              style={[
-                styles.customDataPointContainer,
-                {
-                  height: dataPointsHeight,
-                  width: dataPointsWidth,
-                  top:
-                    containerHeight - (item.value * containerHeight) / maxValue,
-                  left: initialSpacing - dataPointsWidth + spacing * index,
-                },
-              ]}>
+            <G height={dataPointsHeight} 
+              width={dataPointsWidth} 
+              y={containerHeight - (item.value * containerHeight) / maxValue}
+              x={initialSpacing - dataPointsWidth + spacing * index}>
               {customDataPoint()}
-            </View>
+            </G>
           ) : null}
           {dataPointsShape === 'rectangular' ? (
             <Fragment key={index}>
@@ -2483,6 +2452,33 @@ export const LineChart = (props: propTypes) => {
                 {!showTextOnFocus ? item.dataPointText : text}
               </CanvasText>
             ) : null
+          ) : null}
+          {focusEnabled ? (
+            <>
+              {unFocusOnPressOut ? (
+                <Rect
+                  onPressIn={() => onStripPress(item, index)}
+                  onPressOut={() =>
+                    setTimeout(() => setSelectedIndex(-1), delayBeforeUnFocus)
+                  }
+                  x={initialSpacing + (spacing * index - spacing / 2)}
+                  y={8}
+                  width={spacing}
+                  height={containerHeight - 0}
+                  fill={'none'}
+                />
+              ) : (
+                <Rect
+                  onPress={() => onStripPress(item, index)}
+                  onClick={() => onStripPress(item, index)}
+                  x={initialSpacing + (spacing * index - spacing / 2)}
+                  y={8}
+                  width={spacing}
+                  height={containerHeight - 0}
+                  fill={'transparent'}
+                />
+              )}
+            </>
           ) : null}
         </Fragment>
       );

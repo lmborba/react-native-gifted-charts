@@ -1542,6 +1542,7 @@ export const BarChart = (props: PropTypes) => {
               yAxisSide === 'right' ? -yAxisLabelWidth + 10 : yAxisLabelWidth,
             position: 'absolute',
             bottom: stepHeight * -0.5 - 60 + xAxisThickness,
+            overflow: 'visible',
           },
           props.width && {width: props.width - 11},
           horizontal && {width: props.width || Math.min(300, totalWidth)},
