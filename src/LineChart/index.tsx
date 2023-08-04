@@ -2161,7 +2161,6 @@ export const LineChart = (props: propTypes) => {
         style={[
           {
             height: rotateLabel ? 40 : 20,
-            // backgroundColor: 'yellow',
             position: 'absolute',
             bottom: rotateLabel ? 10 : 30,
             zIndex: 10,
@@ -2211,20 +2210,6 @@ export const LineChart = (props: propTypes) => {
     inputRange: [0, 1],
     outputRange: [0, totalWidth],
   });
-
-  // const sectionsOverlay = () => {
-  //     return (
-  //         <Animated.View
-  //             style={{
-  //                 backgroundColor: 'white',
-  //                 position: 'absolute',
-  //                 zIndex: 1,
-  //                 width: animatedWidth
-  //             }}>
-  //             {renderHorizSections()}
-  //         </Animated.View>
-  //     )
-  // }
 
   const onStripPress = (item, index) => {
     setSelectedIndex(index);
@@ -3088,6 +3073,7 @@ export const LineChart = (props: propTypes) => {
           bottom: 60 + labelsExtraHeight,
           width: totalWidth,
           zIndex: zIndex,
+          overflow: 'visible'
         }}>
         {lineSvgComponent(
           points,
@@ -3323,7 +3309,6 @@ export const LineChart = (props: propTypes) => {
           bottom: 60, //stepHeight * -0.5 + xAxisThickness,
           width: animatedWidth,
           zIndex: zIndex,
-          // backgroundColor: 'wheat',
         }}>
         {lineSvgComponent(
           points,
@@ -3414,6 +3399,7 @@ export const LineChart = (props: propTypes) => {
             containerHeight +
             horizSectionsBelow.length * stepHeight +
             labelsExtraHeight,
+          overflow: 'visible'
         },
         yAxisSide === 'right' && {marginLeft: yAxisLabelWidth + yAxisThickness},
       ]}>
@@ -3432,7 +3418,6 @@ export const LineChart = (props: propTypes) => {
             width: totalWidth - spacing + endSpacing,
             paddingBottom:
               horizSectionsBelow.length * stepHeight + labelsExtraHeight,
-            // backgroundColor: 'yellow'
           },
           !props.width && {width: totalWidth - 20},
         ]}
@@ -3463,6 +3448,7 @@ export const LineChart = (props: propTypes) => {
             position: 'absolute',
             bottom: stepHeight * -0.5 - 60, //stepHeight * -0.5 + xAxisThickness,
             paddingRight: 100,
+            overflow: 'visible',
           },
           props.width && {width: props.width + endSpacing},
         ]}>
@@ -3709,7 +3695,7 @@ export const LineChart = (props: propTypes) => {
                 containerHeight + 10 + horizSectionsBelow.length * stepHeight,
               bottom: 60 + labelsExtraHeight,
               width: totalWidth,
-              zIndex: 20,
+              zIndex: 20
             }}>
             {!stripOverPointer && renderStripAndLabel()}
             {renderPointer(1)}
