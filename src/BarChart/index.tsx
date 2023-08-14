@@ -925,7 +925,7 @@ export const BarChart = (props: PropTypes) => {
                     styles.leftLabel,
                     {
                       position: 'absolute',
-                      zIndex: 1,
+                      zIndex: 0,
                       top: stepHeight * index,
                       width: yAxisLabelWidth,
                       height:
@@ -1508,12 +1508,13 @@ export const BarChart = (props: PropTypes) => {
       </View>
     );
   };
-
+  
   return (
     <View
       style={[
         styles.container,
         {
+          overflow: 'visible',
           height:
             containerHeight +
             horizSectionsBelow.length * stepHeight +
@@ -1524,7 +1525,7 @@ export const BarChart = (props: PropTypes) => {
         horizontal && {transform: [{rotate: '90deg'}, {translateY: 15}]},
       ]}>
       {props.hideAxesAndRules !== true && renderHorizSections()}
-      <ScrollView
+      <View
         ref={scrollRef}
         onTouchStart={evt => {
           if (props.renderTooltip) {
@@ -1538,11 +1539,12 @@ export const BarChart = (props: PropTypes) => {
         }}
         style={[
           {
-            marginLeft:
-              yAxisSide === 'right' ? -yAxisLabelWidth + 10 : yAxisLabelWidth,
+            marginLeft: (yAxisSide === 'right' ? -yAxisLabelWidth + 10 : yAxisLabelWidth) + 6,
             position: 'absolute',
             bottom: stepHeight * -0.5 - 60 + xAxisThickness,
             overflow: 'visible',
+            flexDirection: 'row',
+            alignSelf: 'flex-start'
           },
           props.width && {width: props.width - 11},
           horizontal && {width: props.width || Math.min(300, totalWidth)},
@@ -1559,7 +1561,7 @@ export const BarChart = (props: PropTypes) => {
             paddingLeft: initialSpacing,
             paddingBottom:
               horizSectionsBelow.length * stepHeight + labelsExtraHeight,
-            alignItems: 'flex-end',
+            alignItems: 'flex-end'
           },
           !props.width && {width: totalWidth},
         ]}
@@ -1626,6 +1628,7 @@ export const BarChart = (props: PropTypes) => {
                 <View
                   key={index}
                   style={{
+                    overflow: 'visible',
                     position: 'absolute',
                     zIndex: verticalLinesZIndex || -1,
                     marginBottom: xAxisThickness,
@@ -1767,7 +1770,7 @@ export const BarChart = (props: PropTypes) => {
                 />
               ))}
         </Fragment>
-      </ScrollView>
+      </View>
     </View>
   );
 };

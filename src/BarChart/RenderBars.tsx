@@ -101,6 +101,7 @@ type itemType = {
   barStyle?: object;
 };
 const RenderBars = (props: Props) => {
+
   const {
     item,
     index,
@@ -372,6 +373,7 @@ const RenderBars = (props: Props) => {
             width: item.barWidth || props.barWidth || 30,
             height: barHeight,
             marginRight: spacing,
+            alignSelf: 'flex-end',
           },
           item.value < 0 && {
             transform: [
@@ -409,7 +411,7 @@ const RenderBars = (props: Props) => {
               width: props.xAxisIndicesWidth,
               bottom: 0,
               left: (item.barWidth || props.barWidth || 30) / 2,
-              backgroundColor: props.xAxisIndicesColor,
+              backgroundColor: props.xAxisIndicesColor
             }}
           />
         )}
