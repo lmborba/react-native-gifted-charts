@@ -8,7 +8,6 @@ import React, {
 } from 'react';
 import {
   View,
-  ScrollView,
   Animated,
   Easing,
   Text,
@@ -3406,7 +3405,7 @@ export const LineChart = (props: propTypes) => {
       {props.hideAxesAndRules !== true &&
         renderHorizSections(horizSectionProps)}
       {/* {sectionsOverlay()} */}
-      <ScrollView
+      <View
         horizontal
         contentContainerStyle={[
           {
@@ -3733,7 +3732,7 @@ export const LineChart = (props: propTypes) => {
             </View>
           );
         })}
-      </ScrollView>
+      </View>
       {pointerConfig &&
         getPointerProps &&
         getPointerProps({pointerIndex, pointerX, pointerY})}
