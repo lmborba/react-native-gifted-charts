@@ -2130,7 +2130,7 @@ export const LineChart = (props: propTypes) => {
             left:
               index === 0 && initialSpacing < 10
                 ? initialSpacing + spacing * index - spacing / 2 + 8
-                : initialSpacing + spacing * index - spacing / 2,
+                : initialSpacing + spacing * index - 25,
             justifyContent: 'center',
           },
           rotateLabel && {transform: [{rotate: '60deg'}]},
