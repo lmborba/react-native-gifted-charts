@@ -2124,7 +2124,7 @@ export const LineChart = (props: propTypes) => {
         style={[
           {
             position: 'absolute',
-            bottom: 68,
+            bottom: 60,
             zIndex: 10,
             height: 40,
             width: spacing + labelsExtraHeight,
