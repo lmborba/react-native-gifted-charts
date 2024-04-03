@@ -676,7 +676,6 @@ export const LineChart = (props: propTypes) => {
 
   const setPointsOnChange = () => {
     if (counter === data.length) {
-      // console.log('here.......');
       if (!props.curved) {
         setPoints(newPoints.replace('L', 'M'));
         if (areaChart) {
@@ -814,7 +813,6 @@ export const LineChart = (props: propTypes) => {
   const minValue = props.minValue || minItem;
 
   useEffect(() => {
-    // console.log('comes here............')
     decreaseWidth();
     labelsAppear();
     setTimeout(
@@ -1411,12 +1409,6 @@ export const LineChart = (props: propTypes) => {
         }
       }
 
-      // console.log('pp-------->', pp);
-      // console.log('ppp-------->', ppp);
-      // console.log('pp2-------->', pp2);
-      // console.log('ppp2-------->', ppp2);
-
-      /*************************************************************************************/
     } else {
       let p1Array = [],
         p2Array = [],
@@ -1469,7 +1461,6 @@ export const LineChart = (props: propTypes) => {
       let xx3 = svgPath(p3Array, bezierCommand);
       let xx4 = svgPath(p4Array, bezierCommand);
       let xx5 = svgPath(p5Array, bezierCommand);
-      // console.log('xx', xx);
 
       setPoints(xx);
       setPoints2(xx2);
@@ -1572,9 +1563,6 @@ export const LineChart = (props: propTypes) => {
         setArrow2Points(arrowPoints);
       }
 
-      /***************************          For Area Charts          *************************/
-
-      // console.log('xx---->>>', xx)
       if (areaChart) {
         if (data.length) {
           xx =
@@ -1605,7 +1593,6 @@ export const LineChart = (props: propTypes) => {
             (containerHeight + 10 - xAxisThickness) +
             ' ';
           setFillPoints(xx);
-          // console.log('xx later ---->>>', xx)
         }
 
         if (data2.length) {
@@ -2085,7 +2072,6 @@ export const LineChart = (props: propTypes) => {
       }
     : defaultReferenceConfig;
 
-  // console.log('data', data);
   horizSections.pop();
   for (let i = 0; i <= noOfSections; i++) {
     let value = maxValue - stepValue * i;
@@ -2119,14 +2105,22 @@ export const LineChart = (props: propTypes) => {
     labelTextStyle: any,
     labelComponent: Function,
   ) => {
+
+
+    const totalHeight = containerHeight +
+            Math.max(horizSectionsBelow.length,2) * stepHeight +
+            labelsExtraHeight;
+
+    const diff = totalHeight - 86;
+
     return (
       <View
         style={[
           {
             position: 'absolute',
-            bottom: 60,
+            bottom: 60 + diff,
             zIndex: 10,
-            height: 40,
+            height: 20,
             width: spacing + labelsExtraHeight,
             left:
               index === 0 && initialSpacing < 10
@@ -2155,7 +2149,6 @@ export const LineChart = (props: propTypes) => {
     labelTextStyle: any,
     labelComponent: Function,
   ) => {
-    // console.log('label', label);
     return (
       <Animated.View
         style={[
@@ -2963,7 +2956,6 @@ export const LineChart = (props: propTypes) => {
           }
         }}
         onResponderMove={evt => {
-          // console.log('onResponderMove++++++++++',evt);
           if (!pointerConfig) return;
           if (
             activatePointersOnLongPress &&
@@ -3048,25 +3040,13 @@ export const LineChart = (props: propTypes) => {
             }
           }
         }}
-        // onResponderReject={evt => {
-        //   console.log('evt...reject.......',evt);
-        // }}
         onResponderEnd={evt => {
-          // console.log('evt...end.......',evt);
           setResponderStartTime(0);
           setPointerIndex(-1);
           setResponderActive(false);
           setTimeout(() => setPointerX(0), pointerVanishDelay);
         }}
         onResponderTerminationRequest={evt => false}
-        // onResponderTerminate={evt => {
-        //   console.log('evt...terminate.......',evt);
-        // }}
-        // onResponderRelease={evt => {
-        //   setResponderStartTime(0);
-        //   setResponderActive(false);
-        //   setTimeout(() => setPointerX(0), pointerVanishDelay);
-        // }}
         style={{
           position: 'absolute',
           height: containerHeight + 10 + horizSectionsBelow.length * stepHeight,
@@ -3113,7 +3093,6 @@ export const LineChart = (props: propTypes) => {
     arrowStrokeColor,
     arrowFillColor,
   ) => {
-    // console.log('animatedWidth is-------->', animatedWidth);
     return (
       <Animated.View
         onStartShouldSetResponder={evt => (pointerConfig ? true : false)}
@@ -3284,25 +3263,13 @@ export const LineChart = (props: propTypes) => {
             }
           }
         }}
-        // onResponderReject={evt => {
-        //   console.log('evt...reject.......',evt);
-        // }}
         onResponderEnd={evt => {
-          // console.log('evt...end.......',evt);
           setResponderStartTime(0);
           setPointerIndex(-1);
           setResponderActive(false);
           setTimeout(() => setPointerX(0), pointerVanishDelay);
         }}
         onResponderTerminationRequest={evt => false}
-        // onResponderTerminate={evt => {
-        //   console.log('evt...terminate.......',evt);
-        // }}
-        // onResponderRelease={evt => {
-        //   setResponderStartTime(0);
-        //   setResponderActive(false);
-        //   setTimeout(() => setPointerX(0), pointerVanishDelay);
-        // }}
         style={{
           position: 'absolute',
           height: containerHeight + 10 + horizSectionsBelow.length * stepHeight,
@@ -3389,7 +3356,6 @@ export const LineChart = (props: propTypes) => {
     yAxisOffset: props.yAxisOffset,
     hideAxesAndRules: props.hideAxesAndRules,
   };
-
   return (
     <View
       style={[
@@ -3397,7 +3363,7 @@ export const LineChart = (props: propTypes) => {
         {
           height:
             containerHeight +
-            horizSectionsBelow.length * stepHeight +
+            Math.max(horizSectionsBelow.length,2) * stepHeight +
             labelsExtraHeight,
           overflow: 'visible'
         },
@@ -3707,7 +3673,6 @@ export const LineChart = (props: propTypes) => {
           </View>
         ) : null}
         {data.map((item: itemType, index: number) => {
-          // console.log('item', item)
           return (
             <View key={index}>
               {isAnimated
